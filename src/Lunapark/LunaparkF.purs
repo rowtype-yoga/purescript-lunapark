@@ -72,7 +72,7 @@ derive instance functorElementF ∷ Functor ElementF
 
 _lunapark = Proxy ∷ Proxy "lunapark"
 
-type LUNAPARK r = ( lunapark ∷ LunaparkF | r )
+type LUNAPARK r = (lunapark ∷ LunaparkF | r)
 
 liftLunapark ∷ ∀ a r. LunaparkF a → Run (LUNAPARK r) a
 liftLunapark = R.lift _lunapark

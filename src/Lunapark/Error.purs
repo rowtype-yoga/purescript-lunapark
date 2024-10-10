@@ -21,14 +21,19 @@ printError = case _ of
     J.printJsonDecodeError jsonDecodeError
   WebDriverError webdriverError →
     "Response with error message:\n"
-    <> "  error type: " <> LWE.toStringCode webdriverError.error <> "\n"
-    <> "  message: " <> webdriverError.message <> "\n"
-    <> "  stacktrace: " <> webdriverError.stacktrace
+      <> "  error type: "
+      <> LWE.toStringCode webdriverError.error
+      <> "\n"
+      <> "  message: "
+      <> webdriverError.message
+      <> "\n"
+      <> "  stacktrace: "
+      <> webdriverError.stacktrace
   AffjaxError affjaxError →
     N.printError affjaxError
   CachingError cachingError →
     "Error during caching:\n  " <> printCachingError cachingError
   where
-    printCachingError = case _ of
-      EmptyCases key → "There is no working implementation for " <> key <> " action."
-      IncorrectCache key → "Trying another implementation for " <> key <> " action."
+  printCachingError = case _ of
+    EmptyCases key → "There is no working implementation for " <> key <> " action."
+    IncorrectCache key → "Trying another implementation for " <> key <> " action."

@@ -7,7 +7,6 @@ module Lunapark
   , module Lunapark.Types
   ) where
 
-
 import Lunapark.API (Lunapark, Interpreter(..), runInterpreter, BASE_EFFECTS, HandleLunaparkInput, handleLunapark, init, interpret, interpretW3CActions, jsonWireActions, runLunapark, runLunaparkActions, w3cActions)
 import Lunapark.Error (Error(..), CachingError(..), printError)
 import Lunapark.ActionF (ActionF(..), LUNAPARK_ACTIONS, TouchF(..), _lunaparkActions, buttonDown, buttonUp, click, doubleClick, doubleTap, flick, liftAction, longTap, moveTo, pause, scroll, sendKeys, tap, touchDown, touchUp)

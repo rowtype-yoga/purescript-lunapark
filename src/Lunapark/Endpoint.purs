@@ -9,8 +9,7 @@ module Lunapark.Endpoint
   , post
   , post'
   , EndpointPart(..)
-  )
-  where
+  ) where
 
 import Prelude
 
@@ -188,7 +187,7 @@ handleAPIError (Right r) = case r.status of
     Left $ either LE.JsonDecodeError LE.WebDriverError $ LWE.fromJson r.body
 
 get ∷ String → Endpoint → Aff (Either LE.Error Json)
-get uri ep  = map handleAPIError $ N.get NR.json (uri <> print ep)
+get uri ep = map handleAPIError $ N.get NR.json (uri <> print ep)
 
 post ∷ String → Endpoint → Json → Aff (Either LE.Error Json)
 post uri ep obj = map handleAPIError $ N.post NR.json (uri <> print ep) $ Just (NQ.json obj)

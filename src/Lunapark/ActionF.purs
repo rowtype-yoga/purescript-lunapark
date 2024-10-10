@@ -31,7 +31,7 @@ derive instance functorActionF ∷ Functor ActionF
 derive instance functorTouchF ∷ Functor TouchF
 
 _lunaparkActions = Proxy ∷ Proxy "lunaparkActions"
-type LUNAPARK_ACTIONS r = ( lunaparkActions ∷ ActionF | r )
+type LUNAPARK_ACTIONS r = (lunaparkActions ∷ ActionF | r)
 
 liftAction ∷ ∀ r. ActionF Unit → Run (LUNAPARK_ACTIONS r) Unit
 liftAction = R.lift _lunaparkActions

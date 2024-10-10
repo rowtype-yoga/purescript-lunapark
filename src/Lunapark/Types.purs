@@ -68,9 +68,9 @@ decodeSessionId ∷ J.Json → Either J.JsonDecodeError SessionId
 decodeSessionId = map SessionId <<< J.decodeJson
 
 type CreateSessionResponse =
- { session  ∷ SessionId
- , capabilities ∷ Array Capability
- }
+  { session ∷ SessionId
+  , capabilities ∷ Array Capability
+  }
 
 decodeCreateSessionResponse ∷ J.Json → Either J.JsonDecodeError CreateSessionResponse
 decodeCreateSessionResponse = J.decodeJson >=> \obj → do
@@ -145,7 +145,7 @@ decodeRectangle = J.decodeJson >=> \obj → do
   y ← obj .: "y"
   pure { width, height, x, y }
 
-decodeRectangleLegacy ∷ { size ∷ J.Json, position ∷ J.Json }  → Either J.JsonDecodeError Rectangle
+decodeRectangleLegacy ∷ { size ∷ J.Json, position ∷ J.Json } → Either J.JsonDecodeError Rectangle
 decodeRectangleLegacy { size, position } = do
   sobj ← J.decodeJson size
   pobj ← J.decodeJson position
@@ -236,14 +236,15 @@ type Cookie =
 encodeCookie ∷ Cookie → J.Json
 encodeCookie r = J.encodeJson $ FO.fromFoldable
   [ Tuple "cookie" $ FO.fromFoldable
-    $ [ Tuple "name" $ J.encodeJson r.name
-      , Tuple "value" $ J.encodeJson r.value
-      ]
-    <> maybeToAOfPair "path" r.path
-    <> maybeToAOfPair "domain" r.domain
-    <> maybeToAOfPair "secure" r.secure
-    <> maybeToAOfPair "httpOnly" r.httpOnly
-    <> maybeToAOfPair "expiry" r.expiry
+      $
+        [ Tuple "name" $ J.encodeJson r.name
+        , Tuple "value" $ J.encodeJson r.value
+        ]
+          <> maybeToAOfPair "path" r.path
+          <> maybeToAOfPair "domain" r.domain
+          <> maybeToAOfPair "secure" r.secure
+          <> maybeToAOfPair "httpOnly" r.httpOnly
+          <> maybeToAOfPair "expiry" r.expiry
   ]
   where
   maybeToAOfPair ∷ ∀ a. J.EncodeJson a ⇒ String → Maybe a → Array (Tuple String J.Json)
@@ -270,7 +271,6 @@ decodeCookie = J.decodeJson >=> \obj → do
   where
   maybify ∷ ∀ a b. Either a b → Either a (Maybe b)
   maybify e = map Just e <|> Right Nothing
-
 
 type Screenshot =
   { content ∷ String
@@ -315,7 +315,6 @@ encodePointerMove r = FO.fromFoldable
   , Tuple "origin" $ encodeOrigin r.origin
   ]
 
-
 type Action = V.Variant
   ( pause ∷ Milliseconds
   , keyDown ∷ Char
@@ -325,55 +324,54 @@ type Action = V.Variant
   , pointerMove ∷ PointerMove
   )
 
-pause ∷ ∀ r a. a → V.Variant (pause ∷ a|r)
+pause ∷ ∀ r a. a → V.Variant (pause ∷ a | r)
 pause = V.inj (Proxy ∷ Proxy "pause")
 
-keyDown ∷ ∀ r a. a → V.Variant (keyDown ∷ a|r)
+keyDown ∷ ∀ r a. a → V.Variant (keyDown ∷ a | r)
 keyDown = V.inj (Proxy ∷ Proxy "keyDown")
 
-keyUp ∷ ∀ r a. a → V.Variant (keyUp ∷ a|r)
+keyUp ∷ ∀ r a. a → V.Variant (keyUp ∷ a | r)
 keyUp = V.inj (Proxy ∷ Proxy "keyUp")
 
-pointerUp ∷ ∀ r a. a → V.Variant (pointerUp ∷ a|r)
+pointerUp ∷ ∀ r a. a → V.Variant (pointerUp ∷ a | r)
 pointerUp = V.inj (Proxy ∷ Proxy "pointerUp")
 
-pointerDown ∷ ∀ r a. a → V.Variant (pointerDown ∷ a|r)
+pointerDown ∷ ∀ r a. a → V.Variant (pointerDown ∷ a | r)
 pointerDown = V.inj (Proxy ∷ Proxy "pointerDown")
 
-pointerMove ∷ ∀ r a. a → V.Variant (pointerMove ∷ a|r)
+pointerMove ∷ ∀ r a. a → V.Variant (pointerMove ∷ a | r)
 pointerMove = V.inj (Proxy ∷ Proxy "pointerMove")
 
 encodeAction ∷ Action → J.Json
 encodeAction = V.match
   { pause: \ms →
-     J.encodeJson $ FO.fromFoldable
-       [ Tuple "duration" $ J.encodeJson $ un Milliseconds ms
-       , Tuple "type" $ J.encodeJson "pause"
-       ]
+      J.encodeJson $ FO.fromFoldable
+        [ Tuple "duration" $ J.encodeJson $ un Milliseconds ms
+        , Tuple "type" $ J.encodeJson "pause"
+        ]
   , keyDown: \ch →
-     J.encodeJson $ FO.fromFoldable
-       [ Tuple "value" $ J.encodeJson ch
-       , Tuple "type" $ J.encodeJson "keyDown"
-       ]
+      J.encodeJson $ FO.fromFoldable
+        [ Tuple "value" $ J.encodeJson ch
+        , Tuple "type" $ J.encodeJson "keyDown"
+        ]
   , keyUp: \ch →
-     J.encodeJson $ FO.fromFoldable
-       [ Tuple "value" $ J.encodeJson ch
-       , Tuple "type" $ J.encodeJson "keyUp"
-       ]
+      J.encodeJson $ FO.fromFoldable
+        [ Tuple "value" $ J.encodeJson ch
+        , Tuple "type" $ J.encodeJson "keyUp"
+        ]
   , pointerUp: \btn →
-     J.encodeJson $ FO.fromFoldable
-       [ Tuple "button" $ encodeButton btn
-       , Tuple "type" $ J.encodeJson "pointerUp"
-       ]
+      J.encodeJson $ FO.fromFoldable
+        [ Tuple "button" $ encodeButton btn
+        , Tuple "type" $ J.encodeJson "pointerUp"
+        ]
   , pointerDown: \btn →
-     J.encodeJson $ FO.fromFoldable
-       [ Tuple "button" $ encodeButton btn
-       , Tuple "type" $ J.encodeJson "pointerDown"
-       ]
+      J.encodeJson $ FO.fromFoldable
+        [ Tuple "button" $ encodeButton btn
+        , Tuple "type" $ J.encodeJson "pointerDown"
+        ]
   , pointerMove: \pm →
-     J.encodeJson $ FO.insert "type" (J.encodeJson "pointerMove") $ encodePointerMove pm
+      J.encodeJson $ FO.insert "type" (J.encodeJson "pointerMove") $ encodePointerMove pm
   }
-
 
 data PointerType = Mouse | Pen | Touch
 
@@ -464,7 +462,6 @@ data Capability
   | UnhandledPromptBehavior UnhandledPrompt
   | CustomCapability String J.Json
 
-
 encodeCapability ∷ Capability → Tuple String J.Json
 encodeCapability = case _ of
   BrowserName bn → Tuple "browserName" $ J.encodeJson case bn of
@@ -546,8 +543,8 @@ type MoveToRequest =
 encodeMoveToRequest ∷ MoveToRequest → J.Json
 encodeMoveToRequest r = J.encodeJson $ FO.fromFoldable
   [ Tuple "element" $ case r.element of
-       Nothing → J.jsonNull
-       Just el → J.encodeJson $ un Element el
+      Nothing → J.jsonNull
+      Just el → J.encodeJson $ un Element el
   , Tuple "xoffset" $ J.encodeJson r.xoffset
   , Tuple "yoffset" $ J.encodeJson r.yoffset
   ]

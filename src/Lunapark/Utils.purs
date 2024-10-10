@@ -23,7 +23,7 @@ liftAndRethrow a = do
 rethrowAsJsonDecodeError
   ∷ ∀ r
   . Either J.JsonDecodeError
-  ~> R.Run (RE.EXCEPT LE.Error + r)
+      ~> R.Run (RE.EXCEPT LE.Error + r)
 rethrowAsJsonDecodeError =
   RE.rethrow <<< lmap LE.JsonDecodeError
 
