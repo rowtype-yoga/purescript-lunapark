@@ -2,7 +2,7 @@ module Lunapark.ActionF where
 
 import Prelude
 
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Data.Time.Duration (Milliseconds)
 import Lunapark.Types as LT
 import Run (Run)
@@ -30,7 +30,7 @@ data TouchF a
 derive instance functorActionF ∷ Functor ActionF
 derive instance functorTouchF ∷ Functor TouchF
 
-_lunaparkActions = SProxy ∷ SProxy "lunaparkActions"
+_lunaparkActions = Proxy ∷ Proxy "lunaparkActions"
 type LUNAPARK_ACTIONS r = ( lunaparkActions ∷ ActionF | r )
 
 liftAction ∷ ∀ r. ActionF Unit → Run (LUNAPARK_ACTIONS r) Unit

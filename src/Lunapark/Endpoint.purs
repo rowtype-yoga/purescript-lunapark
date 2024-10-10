@@ -14,7 +14,7 @@ module Lunapark.Endpoint
 
 import Prelude
 
-import Affjax as N
+import Affjax.Node as N
 import Affjax.RequestBody as NQ
 import Affjax.ResponseFormat as NR
 import Affjax.StatusCode (StatusCode(..))

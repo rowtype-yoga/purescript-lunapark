@@ -19,7 +19,7 @@ import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype, un)
 import Data.String as Str
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Data.Time.Duration (Milliseconds(..))
 import Data.Traversable as F
 import Data.Tuple (Tuple(..))
@@ -326,22 +326,22 @@ type Action = V.Variant
   )
 
 pause ∷ ∀ r a. a → V.Variant (pause ∷ a|r)
-pause = V.inj (SProxy ∷ SProxy "pause")
+pause = V.inj (Proxy ∷ Proxy "pause")
 
 keyDown ∷ ∀ r a. a → V.Variant (keyDown ∷ a|r)
-keyDown = V.inj (SProxy ∷ SProxy "keyDown")
+keyDown = V.inj (Proxy ∷ Proxy "keyDown")
 
 keyUp ∷ ∀ r a. a → V.Variant (keyUp ∷ a|r)
-keyUp = V.inj (SProxy ∷ SProxy "keyUp")
+keyUp = V.inj (Proxy ∷ Proxy "keyUp")
 
 pointerUp ∷ ∀ r a. a → V.Variant (pointerUp ∷ a|r)
-pointerUp = V.inj (SProxy ∷ SProxy "pointerUp")
+pointerUp = V.inj (Proxy ∷ Proxy "pointerUp")
 
 pointerDown ∷ ∀ r a. a → V.Variant (pointerDown ∷ a|r)
-pointerDown = V.inj (SProxy ∷ SProxy "pointerDown")
+pointerDown = V.inj (Proxy ∷ Proxy "pointerDown")
 
 pointerMove ∷ ∀ r a. a → V.Variant (pointerMove ∷ a|r)
-pointerMove = V.inj (SProxy ∷ SProxy "pointerMove")
+pointerMove = V.inj (Proxy ∷ Proxy "pointerMove")
 
 encodeAction ∷ Action → J.Json
 encodeAction = V.match

@@ -1,0 +1,41 @@
+package:
+  name: lunapark
+  dependencies:
+    - aff
+    - affjax
+    - affjax-node
+    - argonaut-codecs
+    - argonaut-core
+    - arrays
+    - bifunctors
+    - control
+    - css
+    - datetime
+    - effect
+    - either
+    - foldable-traversable
+    - foreign-object
+    - lists
+    - maybe
+    - newtype
+    - node-buffer
+    - node-fs
+    - node-path
+    - ordered-collections
+    - prelude
+    - refs
+    - run
+    - strings
+    - tailrec
+    - tuples
+    - typelevel-prelude
+    - unsafe-coerce
+    - variant
+  test:
+    main: Test.Main
+    dependencies:
+      - console
+workspace:
+  packageSet:
+    registry: 60.4.0
+  extraPackages: {}

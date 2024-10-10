@@ -3,7 +3,7 @@ module Lunapark.LunaparkF where
 import Prelude
 
 import Data.Argonaut.Core as J
-import Data.Symbol (SProxy(..))
+import Type.Proxy (Proxy(..))
 import Lunapark.Types as LT
 import Run (Run)
 import Run as R
@@ -70,7 +70,8 @@ data ElementF a
 derive instance functorLunaparkF ∷ Functor LunaparkF
 derive instance functorElementF ∷ Functor ElementF
 
-_lunapark = SProxy ∷ SProxy "lunapark"
+_lunapark = Proxy ∷ Proxy "lunapark"
+
 type LUNAPARK r = ( lunapark ∷ LunaparkF | r )
 
 liftLunapark ∷ ∀ a r. LunaparkF a → Run (LUNAPARK r) a
